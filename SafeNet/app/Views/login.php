@@ -1,133 +1,139 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SafeNet</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        
-        .login-box {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 350px;
-            text-align: center;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 1rem;
-        }
-        
-        .logo span {
-            color: #e74c3c;
-        }
-        
-        h2 {
-            color: #2c3e50;
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-        }
-        
-        input {
-            width: 100%;
-            padding: 0.8rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        
-        button {
-            width: 100%;
-            padding: 0.8rem;
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 1rem;
-        }
-        
-        button:hover {
-            background-color: #c0392b;
-        }
-        
-        .links {
-            font-size: 0.9rem;
-            color: #7f8c8d;
-        }
-        
-        .links a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        
-        .warning {
-            margin-top: 1.5rem;
-            padding: 0.8rem;
-            background-color: #fdedec;
-            border-left: 4px solid #e74c3c;
-            font-size: 0.8rem;
-            text-align: left;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-box">
-        <div class="logo">Safe<span>Net</span></div>
-        <h2>Masuk ke Akun Anda</h2>
-        
-        <form id="loginForm">
-            <input type="text" id="username" placeholder="Username" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <button type="submit">LOGIN</button>
-        </form>
-        
-        <div class="links">
-            <a href="#">Lupa password?</a> | <a href="#">Daftar akun baru</a>
-        </div>
-        
-        <div class="warning">
-            <strong>PERHATIAN:</strong> Judi online dapat merusak kehidupan finansial dan sosial. SafeNet hadir untuk memberikan edukasi pencegahan judi online.
-        </div>
-    </div>
+<?= $this->include('layouts/head') ?>
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            // Validasi sederhana
-            if(username === '' || password === '') {
-                alert('Username dan password harus diisi');
-                return;
-            }
-            
-            // Simulasi login
-            if(username === 'safenet' && password === 'safenet123') {
-                alert('Login berhasil! Mengarahkan ke halaman utama...');
-                window.location.href = 'dashboard.html';
-            } else {
-                alert('Username atau password salah');
-            }
-        });
-    </script>
-</body>
-</html>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, rgb(0, 0, 0), rgb(63, 63, 63));
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .login-card {
+        background: #ffffff;
+        padding: 3rem 2rem;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 420px;
+        text-align: center;
+    }
+
+    .login-card h1 {
+        font-weight: 700;
+        font-size: 2.2rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+
+    .login-card p {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 2rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #444;
+        font-size: 0.95rem;
+        text-align: center;
+    }
+
+    .form-control {
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .btn-learnify {
+        background-color: rgb(7, 7, 7);
+        color: antiquewhite;
+        border: none;
+        border-radius: 0.75rem;
+        padding: 0.75rem;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: background 0.3s;
+    }
+
+    .btn-learnify:hover {
+        background-color: rgb(48, 48, 48);
+        color: antiquewhite;
+    }
+
+    .toggle-password {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .small-text {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        color: #555;
+    }
+</style>
+
+<section>
+    <div class="login-card" data-aos="zoom-in">
+        <h1 class="sitename">SafeNet</h1>
+        <h4>Welcome Back!</h4>
+
+        <?php if (session()->getFlashdata('error')) : ?>
+            <div class="alert alert-danger text-center">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="post" action="/login/auth">
+            <div class="mb-3 text-start">
+                <label for="identifier" class="form-label text-center w-100">Username atau Email</label>
+                <input type="text" class="form-control" id="identifier" name="username" placeholder="Masukkan username atau email" required>
+            </div>
+            <div class="mb-3 text-start position-relative">
+                <label for="password" class="form-label">Password</label>
+                <div class="position-relative">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
+                    <button type="button" id="togglePassword" class="toggle-password">
+                        <i class="bi bi-eye-slash" id="toggleIcon" style="font-size: 1.2rem;"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-learnify">Masuk</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<?= $this->include('layouts/scripts') ?>
+
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+    const toggleIcon = document.querySelector('#toggleIcon');
+
+    togglePassword.addEventListener('click', function() {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+
+        if (type === 'text') {
+            toggleIcon.classList.remove('bi-eye-slash');
+            toggleIcon.classList.add('bi-eye');
+        } else {
+            toggleIcon.classList.remove('bi-eye');
+            toggleIcon.classList.add('bi-eye-slash');
+        }
+    });
+
+    AOS.init({
+        once: true,
+        duration: 800,
+    });
+</script>
